@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct ExercisesAppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
-        }
+            Home()
+        }.modelContainer(for: [TrainingModel.self])
     }
 }
