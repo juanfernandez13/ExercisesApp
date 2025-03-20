@@ -15,7 +15,13 @@ struct ficha: View {
     var body: some View {
         VStack{
             List {
-                ForEach(Trainings) {training in Text(training.name)}
+                ForEach(Trainings) {training in
+                    NavigationLink {
+                        detailsTraining(training: training)
+                    } label: {
+                        Text(training.name)
+                    }
+                }
                 Button {
                     isPresented.toggle()
                 } label: {
