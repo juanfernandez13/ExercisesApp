@@ -6,13 +6,27 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct detailsTraining: View {
     var training: TrainingModel
-    
+    @Environment(\.modelContext) var modelContext
+    @Environment(\.presentationMode) var presentationMode
+
+
     var body: some View {
         NavigationStack {
             VStack {
+                Button{
+                    modelContext.delete(training)
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Label {
+                        
+                    } icon: {
+                        Image(systemName: "trash")
+                    }
+                }
                 ForEach(training.exercises, id: \.self) {
                     exercise in Text(exercise)
                 }
