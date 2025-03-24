@@ -10,10 +10,26 @@ import SwiftData
 @Model
 class TrainingModel {
     var name: String
-    var exercises: [String]
+    var groups: [String]
+    var exercises: [Exercise]
     
-    init(name: String, exercises: [String] = ["treino 1", "treino 2"]) {
+    init(name: String, groups: [String], exercises: [Exercise]) {
         self.name = name
+        self.groups = groups
         self.exercises = exercises
     }
+}
+
+@Model
+class Exercise {
+    var name: String
+    var sets: Int
+    var repetitions: Int
+    
+    init(name: String, sets: Int, repetitions: Int) {
+        self.name = name
+        self.sets = sets
+        self.repetitions = repetitions
+    }
+    
 }
