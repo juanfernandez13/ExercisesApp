@@ -22,21 +22,14 @@ struct ficha: View {
                         Text(training.name)
                     }
                 }
-                Button {
-                    isPresented.toggle()
-                } label: {
-                    Label {
-                        Text("Adicionar treino")
-                    } icon: {
-                        Image(systemName: "plus")
-                    }
-                }
             }
         }.toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button {}
+                Button {
+                    isPresented.toggle()
+                }
                     label: {
-                        Text("Salvar")
+                            Image(systemName: "plus")
                     }
             }
         }

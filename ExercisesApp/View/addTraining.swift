@@ -13,13 +13,46 @@ struct addTraining: View {
     @Environment(\.modelContext) var modelContext
     
     @State var trainingName: String = ""
+    @State var groupsTraining: [String] = []
+    @State var exercisesTraining: [Exercise] = []
+    
+    @State var showGroups: Bool = false
     
     var body: some View {
         NavigationStack {
             Form {
-                TextField("Nome do treino", text: $trainingName)
-                
-            }.toolbar {
+                Section {
+                    TextField("Nome da ficha", text: $trainingName)
+                } header: {
+                    Text("Nome da ficha")
+                }
+                Section {
+                    ForEach(groupsTraining, id: \.self) {
+                        group in HStack{
+                            Text(group)
+                            Button {
+                                groupsTraining.removeAll {
+                                    currentTask in currentTask == group
+                                }
+                            } label: {
+                                Image(systemName: "xmark.circle")
+                            }
+                        }
+                    }
+                    Button {
+                        showGroups.toggle()
+                    } label: {
+                        Label {
+                            Text("Adicionar grupo")
+                        } icon: {
+                            Image(systemName: "plus")
+                        }
+                    }
+                } header: {
+                    Text("Grupos musculares")
+                }
+            }
+            .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         let newTraining = TrainingModel(
@@ -35,14 +68,12 @@ struct addTraining: View {
                         
                         modelContext.insert(newTraining)
                         dismiss()
-                        
                     } label: {
                         Text("Salvar")
                     }
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
-                        
                         dismiss()
                         
                     } label: {
@@ -50,7 +81,9 @@ struct addTraining: View {
                     }
                 }
             }
-        }
+        }.sheet(isPresented: $showGroups, content: {
+            selectGroups(selectedGroup: $groupsTraining)
+        })
     }
 }
 
