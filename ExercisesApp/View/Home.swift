@@ -11,32 +11,28 @@ struct Home: View {
     var body: some View {
         NavigationStack {
             VStack() {
-                HStack {
-                    Image(systemName: "face.smiling")
-                        .resizable()
-                        .frame(width: 50, height: 50)
+                Image(systemName: "square.fill")
+                    .resizable()
+                    .frame(width: 250, height: 210)
+                    .foregroundColor(Color.gray)
+                
+                Text("Comece um treino e deixe o pet feliz!")
+                    .font(.title)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .frame(maxWidth: .infinity)
                     
-                    Text("Você treinou hoje")
-                }
-                .frame(width: 350, height: 100)
-                .background(.red)
-                
-                Spacer()
-                
                 NavigationLink {
                     ficha()
                 } label: {
-                    Text("Ver ficha")
-                        .frame(width: 350, height:100)
-                        .background(.red)
-                        .foregroundColor(.black)
+                    Text("Adicionar treino")
+                        .frame(width: 350)
+                        .foregroundColor(.teal)
                         .bold()
-                        .font(.system(size: 24))
-                }.frame(minWidth:240)
-                
-                Spacer()
-                
-            }.background(.green)
+                        .font(.system(size: 20))
+                        .padding(.top, 5)
+                }.frame(minWidth: 240)
+            }.padding(.bottom, 320.0)
         }
     }
 }

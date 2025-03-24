@@ -32,10 +32,19 @@ struct ficha: View {
                     }
                 }
             }
-        }.navigationTitle("Ficha")
+        }.toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button {}
+                    label: {
+                        Text("Salvar")
+                    }
+            }
+        }
+        .navigationTitle("Ficha")
             .sheet(isPresented: $isPresented, content: {
                 addTraining()
             })
+            
     }
 }
 
