@@ -14,10 +14,24 @@ struct addTraining: View {
     
     @State var trainingName: String = ""
     
+    @State var  series =  2
+    
+    @State var  repetitions =  12
+    @State var  name =  "qualquer coisa"
+        
+    
+    
+    
     var body: some View {
         NavigationStack {
             Form {
                 TextField("Nome do treino", text: $trainingName)
+                
+                ExerciseField(
+                    series: $series,
+                    repetitions: $repetitions,
+                    name: "qualquer coisa"
+                )
                 
             }.toolbar {
                 ToolbarItem(placement: .confirmationAction) {

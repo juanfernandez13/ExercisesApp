@@ -11,10 +11,17 @@ struct Home: View {
     var body: some View {
         NavigationStack {
             VStack() {
-                Image(systemName: "square.fill")
-                    .resizable()
-                    .frame(width: 250, height: 210)
-                    .foregroundColor(Color.gray)
+                Rectangle()
+                  .foregroundColor(.clear)
+                  .frame(width: 308, height: 308)
+                  .background(
+                    Image("ratinho-feliz-com-peso")
+                     
+                      .aspectRatio(contentMode: .fill)
+                      
+                      .clipped()
+                  )
+                  .cornerRadius(20)
                 
                 Text("Comece um treino e deixe o pet feliz!")
                     .font(.title)

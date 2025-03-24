@@ -14,6 +14,35 @@ struct ficha: View {
     @State var isPresented: Bool = false
     var body: some View {
         VStack{
+            
+            if Trainings.isEmpty {
+                    VStack {
+                        Text("Você ainda não tem nenhuma ficha de treino cadastrada")
+                            .font(.title2)
+                            .fontWeight(.regular)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.black)
+                            .lineLimit(nil)
+                            .padding(.horizontal ,25)
+                            .padding(.top,35)
+                            .frame(maxWidth: .infinity, minHeight: 48)
+
+                        Button(action: {
+                            isPresented.toggle()
+                        }) {
+                            Text("Cadastrar treino")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(.teal)
+                                .padding(.top, 3.0)
+                        }
+                    }
+                }
+            
+           
+              
+            
             List {
                 ForEach(Trainings) {training in
                     NavigationLink {
@@ -22,21 +51,15 @@ struct ficha: View {
                         Text(training.name)
                     }
                 }
-                Button {
-                    isPresented.toggle()
-                } label: {
-                    Label {
-                        Text("Adicionar treino")
-                    } icon: {
-                        Image(systemName: "plus")
-                    }
-                }
+                
             }
         }.toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button {}
+                Button {
+                    isPresented.toggle()
+                }
                     label: {
-                        Text("Salvar")
+                        Text("Adicionar")
                     }
             }
         }
