@@ -30,12 +30,13 @@ struct addTraining: View {
                     ForEach(groupsTraining, id: \.self) {
                         group in HStack{
                             Text(group)
+                            Spacer()
                             Button {
                                 groupsTraining.removeAll {
                                     currentTask in currentTask == group
                                 }
                             } label: {
-                                Image(systemName: "xmark.circle")
+                                Image(systemName: "xmark.circle").foregroundStyle(.red)
                             }
                         }
                     }
