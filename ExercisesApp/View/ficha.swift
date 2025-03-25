@@ -39,10 +39,7 @@ struct ficha: View {
                         }
                     }
                 }
-            
-           
-              
-            
+  
             List {
                 ForEach(Trainings) {training in
                     NavigationLink {
@@ -51,7 +48,6 @@ struct ficha: View {
                         Text(training.name)
                     }
                 }
-                
             }
         }.toolbar {
             ToolbarItem(placement: .confirmationAction) {
@@ -59,7 +55,9 @@ struct ficha: View {
                     isPresented.toggle()
                 }
                     label: {
+
                         Text("Adicionar")
+                            Image(systemName: "plus")
                     }
             }
         }
