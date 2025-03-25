@@ -18,6 +18,14 @@ struct addTraining: View {
     
     @State var showGroups: Bool = false
     
+    @State var  series =  2
+    
+    @State var  repetitions =  12
+    @State var  name =  "qualquer coisa"
+        
+    
+    
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -52,6 +60,11 @@ struct addTraining: View {
                 } header: {
                     Text("Grupos musculares")
                 }
+               ExerciseField(
+                    series: $series,
+                    repetitions: $repetitions,
+                    name: "qualquer coisa"
+                )
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
