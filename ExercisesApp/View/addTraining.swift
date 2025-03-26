@@ -12,17 +12,16 @@ struct addTraining: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var modelContext
     
+    let training: TrainingModel?
+    var isEdit: Bool = false
+    
     @State var trainingName: String = ""
     @State var groupsTraining: [String] = []
     @State var exercisesTraining: [Exercise] = []
     
     @State var showGroups: Bool = false
     @State var showExercises: Bool = false
-    
-    
-        
-    
-    
+
     
     var body: some View {
         NavigationStack {
@@ -64,8 +63,6 @@ struct addTraining: View {
                 
                 
                 Section{
-                    
-                    
                     ForEach($exercisesTraining, id: \.self) { $exercise in
                         ExerciseField(exercise: Binding(
                                     get: { exercise },
@@ -77,11 +74,7 @@ struct addTraining: View {
                                 ), onRemove: {
                                     exercisesTraining.removeAll { $0.id == exercise.id }
                                 })
-                    }
-
-                        
-                   
-                    
+                    }                    
                     Button {
                         showExercises.toggle()
                         
@@ -99,42 +92,22 @@ struct addTraining: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-<<<<<<< Updated upstream
-                        var newTraining = TrainingModel(
+                        let newTraining = TrainingModel(
                             name: trainingName,
                             groups: groupsTraining,
-                            exercises: exercisesTraining
-=======
-                        let newTraining = TrainingModel(
-                            name: "Treino A",
-                            groups: ["Peito", "Dorsal"],
-                            exercises: [
-                                Exercise(
-                                    name: "Supino reto",
-                                    sets: 3,
-                                    repetitions: 12),
-                                Exercise(
-                                    name: "Supino inclinado",
-                                    sets: 4,
-                                    repetitions: 10),
-                                Exercise(
-                                    name: "Remada curvada",
-                                    sets: 4,
-                                    repetitions: 10)
-                            ]
->>>>>>> Stashed changes
-                        )
-                        
-                        for i in 0..<newTraining.exercises.count {
-                            print(newTraining.exercises[i].name)
+                            exercises: exercisesTraining)
+                        if(isEdit) {
+                            training?.name = trainingName
+                            training?.groups = groupsTraining
+                            training?.exercises = exercisesTraining
+                    
+                        } else {
+                            modelContext.insert(newTraining)
                         }
                         
-//                        modelContext.insert(newTraining)
-//                        
-//                        
-//                        dismiss()
+                        dismiss()
                     } label: {
-                        Text("Salvar")
+                        Text(isEdit ? "Editar" : "Salvar")
                     }
                 }
                 ToolbarItem(placement: .cancellationAction) {
@@ -152,9 +125,16 @@ struct addTraining: View {
         .sheet(isPresented: $showExercises, content: {
             SelectExercisesSheetContent(selectedGroup: $groupsTraining,selectedExercises: $exercisesTraining)
         })
+        .onAppear {
+            if let training {
+                trainingName = training.name
+                groupsTraining = training.groups
+                exercisesTraining = training.exercises
+            }
+        }
     }
 }
 
-#Preview {
-    addTraining()
-}
+//#Preview {
+//    addTraining()
+//}

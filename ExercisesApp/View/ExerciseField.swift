@@ -15,8 +15,7 @@ struct ExerciseField: View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
                 Text(exercise.name)
-                    .font(.title2)
-                    .foregroundColor(.black)
+                    .fontWeight(.semibold)
                 Spacer()
                 Button {
                     onRemove()
@@ -24,38 +23,36 @@ struct ExerciseField: View {
                     Image(systemName: "xmark.circle")
                         .foregroundStyle(.red)
                 }
-            }.padding(.bottom, 16)
+            }
+            
+            Divider()
             
             VStack(alignment: .leading, spacing: 32) {
                 HStack {
                     Text("Séries")
-                        .font(.title3)
-                        .fontWeight(.bold)
                         .foregroundColor(.black)
                     Spacer()
                     Stepper(value: $exercise.sets, in: 1...20) {
                         Text("\(exercise.sets)")
-                            .font(.title2)
                             .frame(width: 40, alignment: .center)
                     }
-                    .padding(.all, 10.0)
+                    .padding(.all, 5.0)
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(8)
-                    .frame(width: 120, height: 38)
+                    .frame(width: 120, height: 30)
                 }
+                
+                Divider()
                 
                 HStack {
                     Text("Repetições")
-                        .font(.title3)
-                        .fontWeight(.bold)
                         .foregroundColor(.black)
                     Spacer()
                     Stepper(value: $exercise.repetitions, in: 1...50) {
                         Text("\(exercise.repetitions)")
-                            .font(.title2)
                             .frame(width: 40, alignment: .center)
                     }
-                    .padding(.all, 10.0)
+                    .padding(.all, 5.0)
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(8)
                     .frame(width: 120, height: 38)

@@ -13,19 +13,22 @@ struct menuOption: Hashable {
     let icon: String
     
     static func == (lhs: menuOption, rhs: menuOption) -> Bool {
-           return lhs.text == rhs.text && lhs.icon == rhs.icon
-       }
-       
-       func hash(into hasher: inout Hasher) {
-           hasher.combine(text)
-           hasher.combine(icon)
-       }
+        return lhs.text == rhs.text && lhs.icon == rhs.icon
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(text)
+        hasher.combine(icon)
+    }
 }
 
 struct detailsTraining: View {
     var training: TrainingModel
+    
     @Environment(\.modelContext) var modelContext
     @Environment(\.presentationMode) var presentationMode
+    
+    @State var showEditSheet: Bool = false
     
     var menuOptions: [menuOption] = [
         menuOption(text: "Concluir", icon: "checkmark.square"),
@@ -55,26 +58,24 @@ struct detailsTraining: View {
                                     }
                                 }
                             }
+                            
                         }
                     }
                 }.toolbar {
-                    //                    Spacer()
                     ToolbarItem(placement: .confirmationAction) {
-                        Menu{
-                            //                            //modelContext.delete(training)
-                            //                            presentationMode.wrappedValue.dismiss()
-                           
+                        Menu{                            
                             ForEach(menuOptions, id: \.self) { option in
-                                Button {
+                                Button(role: option.text == "Apagar" ? .destructive : .cancel) {
                                     switch option.text {
                                     case "Apagar":
                                         deleteTraining()
+                                    case "Editar":
+                                        showEditSheet.toggle()
                                     default:
                                         print(option.text)
                                     }
                                 } label: {
                                     Label(option.text, systemImage: option.icon)
-                                        .foregroundColor(option.text == "Apagar" ? .red : .primary)
                                 }
                             }
                         } label: {
@@ -84,12 +85,11 @@ struct detailsTraining: View {
                         }
                     }
                 }
+                .sheet(isPresented: $showEditSheet) {
+                    addTraining(training: training, isEdit: true)
+                }
             }.navigationTitle(training.name)
+            
         }
     }
 }
-
-//#Preview {
-//    var training = TrainingModel(name: "juan", exercises: ["Juan", "Juan2"])
-//    detailsTraining(training: training)
-//}
