@@ -8,52 +8,57 @@
 import SwiftUI
 
 struct ExerciseField: View {
-    @Binding var series: Int
-    @Binding var repetitions: Int
-    var name: String
+    @Binding var exercise: Exercise
+    var onRemove: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Exercício")
-                .font(.headline)
-                .foregroundColor(.black)
-
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.gray.opacity(0.2))
-                .frame(height: 55.0)
-                .overlay(
-                    HStack {
-                        Text(name)
-                            .foregroundColor(.teal)
-                            .font(.headline)
-                        Spacer()
-                    }
-                    .padding(.leading, 10)
-                )
-
-            HStack(spacing: 20) {
-                VStack(alignment: .leading) {
-                    Text("Séries")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-
-                    Stepper(value: $series, in: 1...20) {
-                        Text("\(series)")
-                            .font(.title2)
-                            .frame(width: 40, alignment: .center)
-                    }
+            HStack {
+                Text(exercise.name)
+                    .font(.title2)
+                    .foregroundColor(.black)
+                Spacer()
+                Button {
+                    onRemove()
+                } label: {
+                    Image(systemName: "xmark.circle")
+                        .foregroundStyle(.red)
                 }
-
-                VStack(alignment: .leading) {
-                    Text("Repetições")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-
-                    Stepper(value: $repetitions, in: 1...50) {
-                        Text("\(repetitions)")
+            }.padding(.bottom, 16)
+            
+            VStack(alignment: .leading, spacing: 32) {
+                HStack {
+                    Text("Séries")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .foregroundColor(.black)
+                    Spacer()
+                    Stepper(value: $exercise.sets, in: 1...20) {
+                        Text("\(exercise.sets)")
                             .font(.title2)
                             .frame(width: 40, alignment: .center)
                     }
+                    .padding(.all, 10.0)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(8)
+                    .frame(width: 120, height: 38)
+                }
+                
+                HStack {
+                    Text("Repetições")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .foregroundColor(.black)
+                    Spacer()
+                    Stepper(value: $exercise.repetitions, in: 1...50) {
+                        Text("\(exercise.repetitions)")
+                            .font(.title2)
+                            .frame(width: 40, alignment: .center)
+                    }
+                    .padding(.all, 10.0)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(8)
+                    .frame(width: 120, height: 38)
                 }
             }
         }
@@ -61,16 +66,14 @@ struct ExerciseField: View {
     }
 }
 
+
+
 struct ExerciseField_Previews: PreviewProvider {
-    
-    @State static var series = 3
-    @State static var repetitions = 12
-    
+    @State static var exercise = Exercise(name: "Agachamento", sets: 3, repetitions: 12)
+
     static var previews: some View {
-        ExerciseField(
-            series: $series,
-            repetitions: $repetitions,
-            name: "Agachamento"
-        )
+        ExerciseField(exercise: $exercise,onRemove: {
+            print("hello")
+        })
     }
 }

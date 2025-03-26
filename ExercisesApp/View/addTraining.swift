@@ -17,11 +17,9 @@ struct addTraining: View {
     @State var exercisesTraining: [Exercise] = []
     
     @State var showGroups: Bool = false
+    @State var showExercises: Bool = false
     
-    @State var  series =  2
     
-    @State var  repetitions =  12
-    @State var  name =  "qualquer coisa"
         
     
     
@@ -57,31 +55,64 @@ struct addTraining: View {
                             Image(systemName: "plus")
                         }
                     }
+                    
+                    
+                    
                 } header: {
                     Text("Grupos musculares")
                 }
-               ExerciseField(
-                    series: $series,
-                    repetitions: $repetitions,
-                    name: "qualquer coisa"
-                )
+                
+                
+                Section{
+                    
+                    
+                    ForEach($exercisesTraining, id: \.self) { $exercise in
+                        ExerciseField(exercise: Binding(
+                                    get: { exercise },
+                                    set: { updatedExercise in
+                                        if let index = exercisesTraining.firstIndex(where: { $0.id == exercise.id }) {
+                                            exercisesTraining[index] = updatedExercise
+                                        }
+                                    }
+                                ), onRemove: {
+                                    exercisesTraining.removeAll { $0.id == exercise.id }
+                                })
+                    }
+
+                        
+                   
+                    
+                    Button {
+                        showExercises.toggle()
+                        
+                    }label: {
+                        Text("Adicionar exercicios")
+                    }.disabled(groupsTraining.isEmpty)
+                    
+                    
+                }header: {
+                    Text("Exercicios")
+                }
+                .listRowSeparator(Visibility.visible)
+               
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        let newTraining = TrainingModel(
-                            name: "Treino 1",
-                            groups: ["Grupo 1"],
-                            exercises: [
-                                Exercise(
-                                    name: "Supino",
-                                    sets: 3,
-                                    repetitions: 12)
-                            ]
+                        var newTraining = TrainingModel(
+                            name: trainingName,
+                            groups: groupsTraining,
+                            exercises: exercisesTraining
                         )
                         
-                        modelContext.insert(newTraining)
-                        dismiss()
+                        for i in 0..<newTraining.exercises.count {
+                            print(newTraining.exercises[i].name)
+                        }
+                        
+//                        modelContext.insert(newTraining)
+//                        
+//                        
+//                        dismiss()
                     } label: {
                         Text("Salvar")
                     }
@@ -97,6 +128,9 @@ struct addTraining: View {
             }
         }.sheet(isPresented: $showGroups, content: {
             selectGroups(selectedGroup: $groupsTraining)
+        })
+        .sheet(isPresented: $showExercises, content: {
+            SelectExercisesSheetContent(selectedGroup: $groupsTraining,selectedExercises: $exercisesTraining)
         })
     }
 }
