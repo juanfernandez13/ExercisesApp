@@ -11,6 +11,7 @@ struct Home: View {
     var body: some View {
         NavigationStack {
             VStack() {
+                Image("GymTam")
                 Rectangle()
                   .foregroundColor(.clear)
                   .frame(width: 308, height: 308)
@@ -21,6 +22,7 @@ struct Home: View {
                       
                       .clipped()
                   )
+                  .border(.yellow, width: 2)
                   .cornerRadius(20)
                 
                 Text("Comece um treino e deixe o pet feliz!")
