@@ -99,10 +99,30 @@ struct addTraining: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
+<<<<<<< Updated upstream
                         var newTraining = TrainingModel(
                             name: trainingName,
                             groups: groupsTraining,
                             exercises: exercisesTraining
+=======
+                        let newTraining = TrainingModel(
+                            name: "Treino A",
+                            groups: ["Peito", "Dorsal"],
+                            exercises: [
+                                Exercise(
+                                    name: "Supino reto",
+                                    sets: 3,
+                                    repetitions: 12),
+                                Exercise(
+                                    name: "Supino inclinado",
+                                    sets: 4,
+                                    repetitions: 10),
+                                Exercise(
+                                    name: "Remada curvada",
+                                    sets: 4,
+                                    repetitions: 10)
+                            ]
+>>>>>>> Stashed changes
                         )
                         
                         for i in 0..<newTraining.exercises.count {
