@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct CardWorkoutHome: View {
+    
+    var workoutName: String = ""
+    
+    
     var body: some View {
         ZStack {
             HStack {
@@ -19,20 +23,20 @@ struct CardWorkoutHome: View {
                     .padding()
                 
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Cardio")
+                    Text(workoutName)
                         .font(.system(size: 20, weight: .medium))
                     
 //                    todo add ternarary to personalize done/pedding
-                    Button(action: {
-                        print("Botão pressionado!")
-                    }) {
-                        Text("Concluído")
-                            .foregroundColor(.white)
-                            .font(.system(size: 16, weight: .bold))
-                            .frame(width: 90, height: 30)
-                            .background(.teal)
-                            .cornerRadius(5)
-                    }
+//                    Button(action: {
+//                        print("Botão pressionado!")
+//                    }) {
+//                        Text("Concluído")
+//                            .foregroundColor(.white)
+//                            .font(.system(size: 16, weight: .bold))
+//                            .frame(width: 90, height: 30)
+//                            .background(.teal)
+//                            .cornerRadius(5)
+//                    }
                 }
                 
                 Spacer()
@@ -55,5 +59,5 @@ struct CardWorkoutHome: View {
 }
 
 #Preview {
-    CardWorkoutHome()
+    CardWorkoutHome(workoutName: "Treino")
 }

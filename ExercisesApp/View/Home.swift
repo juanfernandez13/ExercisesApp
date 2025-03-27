@@ -5,9 +5,22 @@
 //  Created by user on 20/03/25.
 //
 
+//
+//  Home.swift
+//  ExercisesApp
+//
+//  Created by user on 20/03/25.
+//
+
 import SwiftUI
+import SwiftData
 
 struct Home: View {
+    
+    @Query var Trainings: [TrainingModel]
+    
+    @State var isPresented: Bool = false
+    
     var body: some View {
         NavigationStack {
             VStack() {
@@ -56,44 +69,35 @@ struct Home: View {
                               .foregroundColor(.black)
                               
                             Spacer()
+                        Button {
+                            isPresented.toggle()
+                        } label: {
                             Text("Adicionar treino")
-                              .font(Font.custom("SF Pro Display", size: 20))
-                              .multilineTextAlignment(.trailing)
-                              .foregroundColor(.teal)
+                                .font(Font.custom("SF Pro Display", size: 20))
+                                .multilineTextAlignment(.trailing)
+                                .foregroundColor(.teal)
+                        }
                               
                     }.padding(.bottom,36)
                     
-                    CardWorkoutHome()
+                    VStack {
+                        ForEach(Trainings) {training in
+                            NavigationLink {
+                                detailsTraining(training: training)
+                            } label: {
+                                CardWorkoutHome(workoutName: training.name)
+                                
+                            }
+                        }
+                    }
+                    
                     
                     
                 }.padding(.horizontal)
-                
-                
-                
-                
-                    
-                    
-             
-                
-
-                
-//                Text("Comece um treino e deixe o pet feliz!")
-//                    .font(.title)
-//                    .multilineTextAlignment(.center)
-//                    .lineLimit(nil)
-//                    .frame(maxWidth: .infinity)
-//                    
-//                NavigationLink {
-//                    ficha()
-//                } label: {
-//                    Text("Adicionar treino")
-//                        .frame(width: 350)
-//                        .foregroundColor(.teal)
-//                        .bold()
-//                        .font(.system(size: 20))
-//                        .padding(.top, 5)
-//                }.frame(minWidth: 240)
             }.padding(.bottom, 320.0)
+            .sheet(isPresented: $isPresented) {
+                addTraining()
+            }
         }
     }
 }

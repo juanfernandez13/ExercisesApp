@@ -30,7 +30,7 @@ struct ExerciseField: View {
                 HStack {
                     Text("Séries")
                         .font(.title3)
-                        .fontWeight(.bold)
+                        .fontWeight(.medium)
                         .foregroundColor(.black)
                     Spacer()
                     Stepper(value: $exercise.sets, in: 1...20) {
@@ -47,7 +47,7 @@ struct ExerciseField: View {
                 HStack {
                     Text("Repetições")
                         .font(.title3)
-                        .fontWeight(.bold)
+                        .fontWeight(.medium)
                         .foregroundColor(.black)
                     Spacer()
                     Stepper(value: $exercise.repetitions, in: 1...50) {
