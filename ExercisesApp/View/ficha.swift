@@ -41,7 +41,7 @@ struct ficha: View {
                 }
   
             List {
-                ForEach(Trainings) {training in
+                ForEach(Trainings) { training in
                     NavigationLink {
                         detailsTraining(training: training)
                     } label: {
@@ -63,12 +63,12 @@ struct ficha: View {
         }
         .navigationTitle("Ficha")
             .sheet(isPresented: $isPresented, content: {
-                addTraining()
+                addTraining(training: nil)
             })
             
     }
 }
 
-#Preview {
-    ficha()
-}
+//#Preview {
+//    ficha()
+//}
