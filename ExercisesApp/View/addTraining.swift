@@ -5,24 +5,23 @@
 //  Created by user on 20/03/25.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct addTraining: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var modelContext
-    
-    let training: TrainingModel?
+
+    var training: TrainingModel?
     var isEdit: Bool = false
-    
+
     @State var trainingName: String = ""
     @State var groupsTraining: [String] = []
     @State var exercisesTraining: [Exercise] = []
-    
+
     @State var showGroups: Bool = false
     @State var showExercises: Bool = false
 
-    
     var body: some View {
         NavigationStack {
             Form {
@@ -33,7 +32,8 @@ struct addTraining: View {
                 }
                 Section {
                     ForEach(groupsTraining, id: \.self) {
-                        group in HStack{
+                        group in
+                        HStack {
                             Text(group)
                             Spacer()
                             Button {
@@ -54,40 +54,40 @@ struct addTraining: View {
                             Image(systemName: "plus")
                         }
                     }
-                    
-                    
-                    
+
                 } header: {
                     Text("Grupos musculares")
                 }
-                
-                
-                Section{
+
+                Section {
                     ForEach($exercisesTraining, id: \.self) { $exercise in
-                        ExerciseField(exercise: Binding(
-                                    get: { exercise },
-                                    set: { updatedExercise in
-                                        if let index = exercisesTraining.firstIndex(where: { $0.id == exercise.id }) {
-                                            exercisesTraining[index] = updatedExercise
-                                        }
+                        ExerciseField(
+                            exercise: Binding(
+                                get: { exercise },
+                                set: { updatedExercise in
+                                    if let index = exercisesTraining.firstIndex(where: {
+                                        $0.id == exercise.id
+                                    }) {
+                                        exercisesTraining[index] = updatedExercise
                                     }
-                                ), onRemove: {
-                                    exercisesTraining.removeAll { $0.id == exercise.id }
-                                })
-                    }                    
+                                }
+                            ),
+                            onRemove: {
+                                exercisesTraining.removeAll { $0.id == exercise.id }
+                            })
+                    }
                     Button {
                         showExercises.toggle()
-                        
-                    }label: {
+
+                    } label: {
                         Text("Adicionar exercicios")
                     }.disabled(groupsTraining.isEmpty)
-                    
-                    
-                }header: {
+
+                } header: {
                     Text("Exercicios")
                 }
                 .listRowSeparator(Visibility.visible)
-               
+
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -96,15 +96,15 @@ struct addTraining: View {
                             name: trainingName,
                             groups: groupsTraining,
                             exercises: exercisesTraining)
-                        if(isEdit) {
+                        if isEdit {
                             training?.name = trainingName
                             training?.groups = groupsTraining
                             training?.exercises = exercisesTraining
-                    
+
                         } else {
                             modelContext.insert(newTraining)
                         }
-                        
+
                         dismiss()
                     } label: {
                         Text(isEdit ? "Editar" : "Salvar")
@@ -113,18 +113,25 @@ struct addTraining: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
                         dismiss()
-                        
+
                     } label: {
                         Text("Cancelar")
                     }
                 }
             }
-        }.sheet(isPresented: $showGroups, content: {
-            selectGroups(selectedGroup: $groupsTraining)
-        })
-        .sheet(isPresented: $showExercises, content: {
-            SelectExercisesSheetContent(selectedGroup: $groupsTraining,selectedExercises: $exercisesTraining)
-        })
+        }.sheet(
+            isPresented: $showGroups,
+            content: {
+                selectGroups(selectedGroup: $groupsTraining)
+            }
+        )
+        .sheet(
+            isPresented: $showExercises,
+            content: {
+                SelectExercisesSheetContent(
+                    selectedGroup: $groupsTraining, selectedExercises: $exercisesTraining)
+            }
+        )
         .onAppear {
             if let training {
                 trainingName = training.name

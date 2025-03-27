@@ -24,12 +24,14 @@ struct ExerciseField: View {
                         .foregroundStyle(.red)
                 }
             }
-            
+
             Divider()
-            
+
             VStack(alignment: .leading, spacing: 32) {
                 HStack {
                     Text("Séries")
+                        .font(.title3)
+                        .fontWeight(.medium)
                         .foregroundColor(.black)
                     Spacer()
                     Stepper(value: $exercise.sets, in: 1...20) {
@@ -41,11 +43,13 @@ struct ExerciseField: View {
                     .cornerRadius(8)
                     .frame(width: 120, height: 30)
                 }
-                
+
                 Divider()
-                
+
                 HStack {
                     Text("Repetições")
+                        .font(.title3)
+                        .fontWeight(.medium)
                         .foregroundColor(.black)
                     Spacer()
                     Stepper(value: $exercise.repetitions, in: 1...50) {
@@ -63,14 +67,14 @@ struct ExerciseField: View {
     }
 }
 
-
-
 struct ExerciseField_Previews: PreviewProvider {
     @State static var exercise = Exercise(name: "Agachamento", sets: 3, repetitions: 12)
 
     static var previews: some View {
-        ExerciseField(exercise: $exercise,onRemove: {
-            print("hello")
-        })
+        ExerciseField(
+            exercise: $exercise,
+            onRemove: {
+                print("hello")
+            })
     }
 }
